@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      #div1 {
+        width: 200px;
+        height: 200px;
+        background-color: lightpink;
+        position: absolute;
+        left: 200px;
+        top: 200px;
+      }
+      .t {
+        width: 100%;
+        height: 20px;
+        background: lightblue;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .r {
+        height: 100%;
+        width: 20px;
+        background: lightblue;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .l {
+        height: 100%;
+        width: 20px;
+        background: lightblue;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .b {
+        height: 20px;
+        width: 100%;
+        background: lightblue;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+      .lt {
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background: yellowgreen;
+        position: absolute;
+      }
+      .rt {
+        top: 0;
+        right: 0;
+        height: 20px;
+        width: 20px;
+        background: yellowgreen;
+        position: absolute;
+      }
+      .lb {
+        bottom: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background: yellowgreen;
+        position: absolute;
+      }
+      .rb {
+        bottom: 0;
+        right: 0;
+        height: 20px;
+        width: 20px;
+        background: yellowgreen;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div1">
+      <div class="t"></div>
+      <div class="r"></div>
+      <div class="b"></div>
+      <div class="l"></div>
+      <div class="lt"></div>
+      <div class="lb"></div>
+      <div class="rt"></div>
+      <div class="rb"></div>
+    </div>
+    <script>
+      let div1 = document.querySelector("#div1");
+      let div = div1.getElementsByTagName("div");
+      for (let i = 0; i < div.length; i++) {
+        drag(div[i]);
+      }
+      function drag(obj) {
+        obj.onmousedown = function(e) {
+          let preW = div1.offsetWidth;
+          let preH = div1.offsetHeight;
+          let preL = div1.offsetLeft;
+          let preT = div1.offsetTop;
+          let preY = e.clientY;
+          let preX = e.clientX;
+          document.onmousemove = function(e) {
+            if (obj.className.indexOf("t") !== -1) {
+              let chaY = preY - e.clientY;
+              div1.style.height = preH + chaY + "px";
+              div1.style.top = preT - chaY + "px";
+            }
+            if (obj.className.indexOf("r") !== -1) {
+              let chaX = preX - e.clientX;
+              div1.style.width = preW - chaX + "px";
+            }
+            if (obj.className.indexOf("b") !== -1) {
+              let chaY = e.clientY - preY;
+              div1.style.height = preH + chaY + "px";
+            }
+            if (obj.className.indexOf("l") !== -1) {
+              let chaX = preX - e.clientX;
+              div1.style.width = preW + chaX + "px";
+              div1.style.left = preX - chaX + "px";
+            }
+            document.onmouseup = function() {
+              document.onmousemove = null;
+              document.onmouseup = null;
+            };
+          };
+        };
+      }
+    </script>
+  </body>
+</html>
