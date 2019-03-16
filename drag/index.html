@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      #wrapper {
+        border: 1px solid black;
+        width: 500px;
+        height: 500px;
+        margin: 100px auto;
+        position: relative;
+      }
+      #box {
+        position: absolute;
+        height: 200px;
+        width: 200px;
+        background: lightcoral;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="box"></div>
+    </div>
+    <script>
+      let box = document.querySelector("#box");
+      let wrapper = document.querySelector("#wrapper");
+      box.onmousedown = function(e) {
+        let lastX = e.clientX;
+        let lastY = e.clientY;
+        let disX = lastX - box.offsetLeft;
+        let disY = lastY - box.offsetTop;
+        box.onmousemove = function(e) {
+          let nowX = e.clientX;
+          let nowY = e.clientY;
+          let left = nowX - disX;
+          let top = nowY - disY;
+
+          left = left < 0 ? 0 : left;
+          top = top < 0 ? 0 : top;
+
+          left = left >= 500 - 200 ? 300 : left;
+          top = top >= 500 - 200 ? 300 : top;
+
+          box.style.left = left + "px";
+          box.style.top = top + "px";
+        };
+        box.onmouseup = function() {
+          box.onmousemove = null;
+        };
+      };
+      wrapper.onmouseleave = function() {
+        box.onmousemove = null;
+      };
+    </script>
+  </body>
+</html>
